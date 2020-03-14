@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rock-Paper-Scissors Game</title>
+    <style>
+      * {
+        font-family: Helvetica;
+        font-weight: 400;
+      }
+
+      #title {
+        color: #0984e3;
+        text-align: center;
+      }
+
+      #score {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #player,
+      #computer {
+        position: relative;
+        flex-grow: 1;
+        border-radius: 5px;
+        width: 200px;
+        padding: 20px;
+        color: #ffffff;
+      }
+      #player {
+        background-color: #ff7675;
+      }
+      #computer {
+        background-color: #3d61d6;
+      }
+      #versus {
+        font-size: 40px;
+        text-align: center;
+        width: 70px;
+      }
+      #player-name,
+      #computer-name {
+        margin: 0;
+        padding: 0;
+      }
+      #player-name {
+        text-align: left;
+      }
+      #computer-name {
+        text-align: right;
+      }
+      #player-points,
+      #computer-points {
+        position: absolute;
+        top: 8px;
+        font-size: 32px;
+      }
+      #player-points {
+        right: 20px;
+      }
+      ul#player-choice,
+      ul#computer-choice {
+        list-style: none;
+        text-align: center;
+        padding: 0;
+        margin: 0;
+      }
+      ul#player-choice li,
+      ul#computer-choice li {
+        display: inline;
+      }
+      ul#player-choice li a,
+      ul#computer-choice li a {
+        opacity: 0.2;
+      }
+      ul#player-choice li a:hover,
+      ul#player-choice li a.selected,
+      ul#computer-choice li a.selected {
+        opacity: 1;
+      }
+      ul#player-choice li a img,
+      ul#computer-choice li a img {
+        max-width: 150px;
+      }
+
+      #messages {
+        background-color: #b2bec3;
+        font-size: 32px;
+        border-radius: 5px;
+        padding: 20px;
+        margin: 40px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="principal">
+      <h1 id="title">Rock, Paper or Scissors</h1>
+      <div id="score">
+        <div id="player">
+          <h1 id="player-name">Player</h1>
+          <span id="player-points">0</span>
+
+          <ul id="player-choice">
+            <li>
+              <a id="player-choice-1" onclick="play(1)"
+                ><img src="img/paper.png"
+              /></a>
+            </li>
+            <li>
+              <a id="player-choice-2" onclick="play(2)"
+                ><img src="img/rock.png"
+              /></a>
+            </li>
+            <li>
+              <a id="player-choice-3" onclick="play(3)"
+                ><img src="img/scissors.png"
+              /></a>
+            </li>
+          </ul>
+        </div>
+
+        <div id="versus">Vs</div>
+
+        <div id="computer">
+          <h1 id="computer-name">Computer</h1>
+          <span id="computer-points">0</span>
+
+          <ul id="computer-choice">
+            <li>
+              <a id="computer-choice-1"><img src="img/paper.png"/></a>
+            </li>
+            <li>
+              <a id="computer-choice-2"><img src="img/rock.png"/></a>
+            </li>
+            <li>
+              <a id="computer-choice-3"><img src="img/scissors.png"/></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div id="messages">messages</div>
+    </div>
+    <script>
+      var playerChoice = 0;
+      var playerScore = 0;
+      var computerChoice = 0;
+      var computerScore = 0;
+      var winner = -1;
+
+      document.getElementById("messages").innerHTML = " ";
+
+      function play(choice) {
+        playerChoice = choice;
+
+        computerChoice = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+        //1-paper  2-rock  3-scissors
+        if (playerChoice == 1 && computerChoice == 1) {
+          winner = 0;
+        } else if (playerChoice == 1 && computerChoice == 2) {
+          winner = 1;
+        } else if (playerChoice == 1 && computerChoice == 3) {
+          winner = 2;
+        } else if (playerChoice == 2 && computerChoice == 1) {
+          winner = 2;
+        } else if (playerChoice == 2 && computerChoice == 2) {
+          winner = 0;
+        } else if (playerChoice == 2 && computerChoice == 3) {
+          winner = 1;
+        } else if (playerChoice == 3 && computerChoice == 1) {
+          winner = 1;
+        } else if (playerChoice == 3 && computerChoice == 2) {
+          winner = 2;
+        } else if (playerChoice == 3 && computerChoice == 3) {
+          winner = 0;
+        }
+
+        //clean choice after play
+        document.getElementById("player-choice-1").classList.remove("selected");
+        document.getElementById("player-choice-2").classList.remove("selected");
+        document.getElementById("player-choice-3").classList.remove("selected");
+        document
+          .getElementById("computer-choice-1")
+          .classList.remove("selected");
+        document
+          .getElementById("computer-choice-2")
+          .classList.remove("selected");
+        document
+          .getElementById("computer-choice-3")
+          .classList.remove("selected");
+
+        document
+          .getElementById("player-choice-" + playerChoice)
+          .classList.add("selected");
+        document
+          .getElementById("computer-choice-" + computerChoice)
+          .classList.add("selected");
+
+        if (winner == 0) {
+          document.getElementById("messages").innerHTML = "Tied";
+        } else if (winner == 1) {
+          document.getElementById("messages").innerHTML = "Player Wins";
+          playerScore++;
+        } else if (winner == 2) {
+          document.getElementById("messages").innerHTML = "Computer Wins";
+          computerScore++;
+        }
+        document.getElementById("player-points").innerHTML = playerScore;
+        document.getElementById("computer-points").innerHTML = computerScore;
+      }
+    </script>
+  </body>
+</html>
